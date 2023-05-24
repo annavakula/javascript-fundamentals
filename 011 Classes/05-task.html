@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 05</title>
+
+    <style>
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .report-block {
+            border: 1px solid green;
+            background-color: #00800049;
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <button>Создать отчет</button>
+    <div id="output"></div>
+
+    <template id="monthReport">
+        <div class="report-block">
+            <p>месяц {{month}}</p>
+            <p>сумма {{amount}}</p>
+            <ul></ul>
+                {{#users}} <!-- начало цикла для вывода массива users -->
+                <li>{{.}}</li> <!-- . - текущий элемент массива -->
+                {{/users}} <!-- конец цикла -->
+            </ul>
+        </div>
+    </template>
+
+    <script src="mustache.min.js"></script>
+    <script>
+        /*
+            Задание:
+            Перепишите данный код с использованием классов.
+            Создайте класс MonthReport со свойствами month, amount, users.
+            Добавьте в класс метод render, который будет визуализировать содержимое класса на странице.
+            Создайте массив экземпляров класса MonthReport со значениями, которые сейчас находятся в массиве source.
+            Пройдите циклом по массиву и на каждом экземпляре класса MonthReport вызовите метод render.
+        */
+
+        // let source = [
+        //     {
+        //         month: "Январь",
+        //         amount: 20,
+        //         users: ["Claudia Contreras", "Blair Hayden", "Montgomery Cohen"]
+        //     },
+        //     {
+        //         month: "Февраль",
+        //         amount: 140
+        //     },
+        //     {
+        //         month: "Март",
+        //         amount: 115,
+        //         users: ["Blair Hayden", "Montgomery Cohen"]
+        //     }
+        // ];
+
+        // let template = document.querySelector("#monthReport").innerHTML;
+        // let output = document.querySelector("#output");
+
+        // document.querySelector("button").addEventListener("click", function () {
+        //     for (let i = 0; i < source.length; i++) {
+        //         const monthData = source[i];
+        //         let html = Mustache.render(template, monthData);
+        //         output.insertAdjacentHTML("beforeend", html);
+        //     }
+        // });
+
+
+
+        let template = document.querySelector("#monthReport").innerHTML;
+        let output = document.querySelector("#output");
+
+        class MonthReport {
+            constructor(month, amount, users) {
+                this.month = month;
+                this.amount = amount;
+                this.users = users;
+            }
+
+            render(element) {
+                let html = Mustache.render(template, this);
+                element.insertAdjacentHTML("beforeend", html);
+            }
+        }
+
+        let source = [
+            new MonthReport ("Январь", 20, ["Claudia Contreras", "Blair Hayden", "Montgomery Cohen"]),
+            new MonthReport ("Февраль", 140),
+            new MonthReport ("Март", 115, ["Blair Hayden", "Montgomery Cohen"]),
+        ];
+
+        document.querySelector("button").addEventListener("click", function() {
+            source.forEach(report => report.render(output));
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 05</title>
+</head>
+
+<body>
+    <div data-bind="firstName"></div>
+    <div data-bind="lastName"></div>
+    <div data-bind="age"></div>
+
+    <p data-bind="prop1"></p>
+    <p data-bind="prop2"></p>
+    <script>
+        /*
+        Задание:
+        Напишите сценарий, который свойства объекта user выведет в элементы на странице, которые помечены атрибутами data-bind.
+        При этом значение атрибута это имя свойства, значение которого должно отобразится в элементе.
+        Например, в <div data-bind="firstName"></div> должно отобразится значение свойства firstName объекта user
+        Попробуйте написать универсальную функцию, которая сможет выводить любой объект с любыми свойствами в разметку в соответствующие элементы, помеченные атрибутом.
+        Для обхода свойств объекта, можно использовать цикл for in
+        */
+
+        let user = {
+            firstName: "Jhon",
+            lastName: "Doe",
+            age: "25",
+        }
+
+        let test = {
+            prop1: '1111',
+            prop2: '2222',
+        }
+
+        function bindProperties(obj) {
+
+            for (const propName in obj) {
+                if (Object.hasOwnProperty.call(obj, propName)) {
+                    const value = obj[propName];
+
+                    const element = document.querySelector(`[data-bind="${propName}"]`);
+                    element.textContent = value;
+                }
+            }
+        }
+
+        bindProperties(user);
+        bindProperties(test);
+    </script>
+</body>
+
+</html>
